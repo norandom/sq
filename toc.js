@@ -3,15 +3,16 @@
     var b = function(b) {
         return this.each(function() {
             var c, d, e = a(this), f = e.data(), g = [e], h = this.tagName, i = 0;
+            // Use a more specific selector if necessary
             c = a.extend({
-                content: "body",
+                content: ".content-wrapper > .content", // Adjusted selector for specificity
                 headings: "h2,h3,h4,h5"
             }, {
                 content: f.toc || void 0,
                 headings: f.tocHeadings || void 0
             }, b);
             d = c.headings.split(",");
-            a(c.content).find(c.headings).not("#itemPagination *").attr("id", function(b, c) {
+            a(c.content).find(c.headings).attr("id", function(b, c) {
                 var d = function(a) {
                     0 === a.length && (a = "?");
                     for (var b = a.replace(/\s+/g, "_"), c = "", d = 1; null !== document.getElementById(b + c);) c = "_" + d++;
@@ -35,36 +36,8 @@
     a.fn.toc = b;
     a.fn.toc.noConflict = function() {
         return a.fn.toc = c, this
-    }, a(function() {
-        b.call(a("[data-toc]"))
+    };
+    a(function() {
+        b.call(a("[data-toc]"));
     })
 }(window.jQuery);
-
-$(document).ready(function() {
-    // Setting up structure of table of contents
-    var expandable = document.getElementById("expandable-text");
-    var btnText = document.getElementById("expand-toggle");
-
-    var expandText = typeof expandText === 'undefined' ? "Show" : expandText;
-    var collapseText = typeof collapseText === 'undefined' ? "Hide" : collapseText;
-
-    if (btnText.innerHTML === expandText) {
-        $("#expandable-text").css({
-            display: "none"
-        });
-    }
-
-    // If a click on button occurs, then do the following
-    $("#expand-toggle").click(function() {
-        var expandable = document.getElementById("expandable-text");
-        var btnText = document.getElementById("expand-toggle");
-
-        if (btnText.innerHTML === expandText) {
-            $("#expandable-text").toggle();
-            btnText.innerHTML = collapseText;
-        } else {
-            $("#expandable-text").toggle();
-            btnText.innerHTML = expandText;
-        }
-    });
-});
